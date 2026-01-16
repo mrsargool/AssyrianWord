@@ -295,7 +295,7 @@ body {
     direction: rtl;
     text-align: right;
     font-family: 'Marcus', 'Estrangelo Edessa', sans-serif;
-    font-size: 22px;
+    font-size: 42px;
     line-height: 1.5;
     cursor: text;
     white-space: pre-wrap;
@@ -437,3 +437,4 @@ body {
     }
 
 }
+
