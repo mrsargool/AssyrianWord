@@ -295,7 +295,7 @@ body {
     direction: rtl;
     text-align: right;
     font-family: 'Marcus', 'Estrangelo Edessa', sans-serif;
-    font-size: 62px;
+    font-size: 22px;
     line-height: 1.5;
     cursor: text;
     white-space: pre-wrap;
@@ -435,4 +435,5 @@ body {
         min-height: 0 !important; /* Fixes the 2-page blank issue */
         overflow: visible;
     }
+
 }
