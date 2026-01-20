@@ -266,7 +266,7 @@ function handlePhysicalTyping(e) {
         
         ',':'،',   // comma → Arabic comma
         '.':'.',   // dot → dot
-        '!':'!'    // exclamation → exclamation
+        '!':'!',    // exclamation → exclamation
 
         '`' : '̰', '2': 'ܵ', '1' : 'ܲ', '3' : 'ܸ', '4' : 'ܹ', '5' : 'ܿ', '6' : 'ܼ', '7' : '̇', '8' : '̣', '9' : '̈', '0' : '̤',
         '\\' : '݇'
@@ -289,6 +289,7 @@ function handlePhysicalTyping(e) {
     addCharacter(shiftMap[e.key.toLowerCase()]);
     }
 }
+
 
 
 
