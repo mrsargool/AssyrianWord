@@ -257,7 +257,12 @@ function handlePhysicalTyping(e) {
     };
 
     const shiftMap = {
-        '~' : '̮', 'g' : 'ܓ̣' , 'b' : 'ܒ̣', '?' : '؟'
+        '~': '̮',
+        'g': 'ܓ̣',     // Shift + g
+        'b': 'ܒ̣',     // Shift + b
+        'p': 'ܦ̮',     // Shift + p
+        'o': 'ܘܼ',     // Shift + o
+        '?': '؟'
     };
 
     if (regMap[e.key.toLowerCase()] && !e.shiftKey) {
@@ -268,4 +273,5 @@ function handlePhysicalTyping(e) {
         addCharacter(shiftMap[e.key.toLowerCase()]);
     }
 }
+
 
