@@ -55,7 +55,9 @@
 
         <div class="editor-container">
             <div class="page-bg" id="page-wrapper">
-                <div id="paper" contenteditable="true" spellcheck="false" oninput="handleInput()"></div>
+                <div id="paper" contenteditable="true" spellcheck="false" dir="rtl" lang="syr" oninput="handleInput()" onpaste="return false" oncopy="return false" oncut="return false">
+</div>
+
             </div>
         </div>
 
@@ -107,7 +109,12 @@
             </div>
         </div>
     </div>
+    
+<div id="counter" style="text-align:center; color:#5f6368; margin:8px 0;">
+  Characters: 0 | Words: 0
+</div>
 
     <script src="main.js"></script>
 </body>
+
 </html>
