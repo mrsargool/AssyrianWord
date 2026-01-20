@@ -13,6 +13,17 @@ window.onload = function () {
     renderDashboard();
 };
 
+function updateCounter() {
+    const text = document.getElementById('paper').innerText.trim();
+    const chars = text.length;
+    const words = text ? text.split(/\s+/).length : 0;
+
+    const counter = document.getElementById('counter');
+    if (counter) {
+        counter.innerText = `Characters: ${chars} | Words: ${words}`;
+    }
+}
+
 // --- DASHBOARD FUNCTIONS ---
 function renderDashboard() {
     const grid = document.getElementById('doc-grid');
@@ -94,6 +105,7 @@ function deleteDoc(e, id) {
 function handleInput() {
     autoSave();
     updatePageHeight();
+    updateCounter();
 }
 
 function autoSave() {
@@ -273,5 +285,6 @@ function handlePhysicalTyping(e) {
         addCharacter(shiftMap[e.key.toLowerCase()]);
     }
 }
+
 
 
