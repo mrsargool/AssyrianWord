@@ -263,6 +263,10 @@ function handlePhysicalTyping(e) {
         'q': 'ܩ', 'r': 'ܪ', 'f': 'ܫ', 'x': 'ܚ',
         's': 'ܣ', 'j': 'ܓ̰', 'c': 'ܨ', 'u': 'ܘܼ', 'o': 'ܘܿ',
         'e': 'ܥ', 'y': 'ܝ', 'l': 'ܠ', 'i': 'ܝܼ', 'v' : 'ܛ',
+        
+        ',':'،',   // comma → Arabic comma
+        '.':'.',   // dot → dot
+        '!':'!'    // exclamation → exclamation
 
         '`' : '̰', '2': 'ܵ', '1' : 'ܲ', '3' : 'ܸ', '4' : 'ܹ', '5' : 'ܿ', '6' : 'ܼ', '7' : '̇', '8' : '̣', '9' : '̈', '0' : '̤',
         '\\' : '݇'
@@ -285,6 +289,7 @@ function handlePhysicalTyping(e) {
         addCharacter(shiftMap[e.key.toLowerCase()]);
     }
 }
+
 
 
 
