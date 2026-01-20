@@ -8,6 +8,11 @@ let isPhysicalKeyboardEnabled = false;
 const A4_HEIGHT_PX = 1123;
 const PAGE_GAP_PX = 10;
 
+// Undo/Redo History
+let history = [];
+let historyIndex = -1;
+let isUndoRedoing = false;
+
 // --- INIT ---
 window.onload = function () {
     renderDashboard();
@@ -290,6 +295,7 @@ function handlePhysicalTyping(e) {
     addCharacter(shiftMap[e.key.toLowerCase()]);
     }
 }
+
 
 
 
