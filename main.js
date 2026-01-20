@@ -81,6 +81,7 @@ function openDoc(id) {
     document.getElementById('paper').innerHTML = doc.content;
 
     updatePageHeight();
+    updateCounter();
     document.getElementById('paper').focus();
 }
 
