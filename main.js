@@ -282,13 +282,14 @@ function handlePhysicalTyping(e) {
     };
 
     if (regMap[e.key.toLowerCase()] && !e.shiftKey) {
-        e.preventDefault();
-        addCharacter(regMap[e.key.toLowerCase()]);
+    e.preventDefault();  // ✅ Stop default , . ! insertion
+    addCharacter(regMap[e.key.toLowerCase()]);
     } else if (shiftMap[e.key.toLowerCase()]) {
-        e.preventDefault();
-        addCharacter(shiftMap[e.key.toLowerCase()]);
+    e.preventDefault();
+    addCharacter(shiftMap[e.key.toLowerCase()]);
     }
 }
+
 
 
 
