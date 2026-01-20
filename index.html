@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AssyrianWord</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div id="dashboard-view">
@@ -14,54 +16,71 @@
                 Assyrian<span style="font-weight:600; color: var(--primary)">Word</span>
             </div>
         </div>
-        
+
         <h3 style="color:#202124; font-size: 16px; margin-bottom:15px;">Start a new document</h3>
-        
+
         <div class="doc-grid" id="doc-grid">
             <div class="new-doc-card" onclick="createNewDoc()">
                 <div style="text-align: center; color: var(--primary);">
-                    <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                    </svg>
                     <div style="margin-top: 8px; font-weight: 500;">Blank</div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 
     <div id="editor-view">
         <div class="toolbar">
             <button class="tool-btn" onclick="showDashboard()" data-tooltip="Back to Home">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
             </button>
-            
+
             <div class="separator"></div>
 
             <input type="text" id="doc-title" class="doc-title-input" value="Untitled Document" oninput="updateTitle()">
             <div id="save-status" class="save-status">Saved</div>
+            <div id="counter" class="counter">0 Words 0 Characters</div>
 
             <div class="separator"></div>
 
             <button class="tool-btn" onclick="window.print()" data-tooltip="Print (PDF)">
-                <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" />
+                </svg>
             </button>
 
-            <button class="tool-btn" id="typing-toggle" onclick="togglePhysicalKeyboard()" data-tooltip="Toggle Assyrian Keyboard">
-                <svg viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/></svg>
+            <button class="tool-btn" id="typing-toggle" onclick="togglePhysicalKeyboard()"
+                data-tooltip="Toggle Assyrian Keyboard">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z" />
+                </svg>
             </button>
 
-            <button class="tool-btn active" id="osk-toggle" onclick="toggleOSK()" data-tooltip="Show/Hide On-Screen Keyboard">
-                <svg viewBox="0 0 24 24"><path d="M21 16H3V4h18v12zm1-14H2C.9 2 0 2.9 0 4v12c0 1.1.9 2 2 2h7v2H7v2h8v-2h-2v-2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM5 13h14v-1.5H5V13zm0-3.5h14V8H5v1.5z"/></svg>
+            <button class="tool-btn" id="osk-toggle" onclick="toggleOSK()"
+                data-tooltip="Show/Hide On-Screen Keyboard">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M21 16H3V4h18v12zm1-14H2C.9 2 0 2.9 0 4v12c0 1.1.9 2 2 2h7v2H7v2h8v-2h-2v-2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM5 13h14v-1.5H5V13zm0-3.5h14V8H5v1.5z" />
+                </svg>
             </button>
         </div>
 
         <div class="editor-container">
             <div class="page-bg" id="page-wrapper">
-                <div id="paper" contenteditable="true" spellcheck="false" dir="rtl" lang="syr" oninput="handleInput()" onpaste="return false" oncopy="return false" oncut="return false">
-</div>
+                <div id="paper" contenteditable="true" spellcheck="false" dir="rtl" lang="syr" oninput="handleInput()"
+                    onpaste="return false" oncopy="return false" oncut="return false">
+                </div>
 
             </div>
         </div>
 
-        <div id="keyboard-wrapper">
+        <div id="keyboard-wrapper" class="hidden">
             <div class="keyboard-layout">
                 <div class="kb-row">
                     <div class="key" onclick="addCharacter('ܐ')" title="Alap">ܐ</div>
@@ -109,10 +128,6 @@
             </div>
         </div>
     </div>
-    
-<div id="counter" style="text-align:center; color:#5f6368; margin:8px 0;">
-  Characters: 0 | Words: 0
-</div>
 
     <script src="main.js"></script>
 </body>

@@ -20,7 +20,7 @@ function updateCounter() {
 
     const counter = document.getElementById('counter');
     if (counter) {
-        counter.innerText = `Characters: ${chars} | Words: ${words}`;
+        counter.innerText = `${words} Words ${chars} Characters`;
     }
 }
 

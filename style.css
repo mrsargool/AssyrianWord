@@ -379,6 +379,12 @@ body {
     font-size: 24px;
 }
 
+#counter {
+    color:#5f6368; 
+    margin:8px 0;
+    font-size: 12px;
+}
+
 /* Print Styles */
 @media print {
     @page {
@@ -396,7 +402,8 @@ body {
     #dashboard-view,
     .toolbar,
     #keyboard-wrapper,
-    .save-status {
+    .save-status,
+    #counter {
         display: none !important;
     }
 
