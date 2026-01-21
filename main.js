@@ -351,7 +351,7 @@ function transliterateSelection() {
 }
 
 function defineSelection(){
-    const selection = window.getSelection().toString();
+    const selection = window.getSelection().toString().replace(/[^\u0710-\u072C]/g, ""); // Only keep assyrian letters, drop all accent marks
     window.open('https://www.sharrukin.io/assyrian-dictionary/?search=' + encodeURIComponent(selection), '_blank');
 }
 
@@ -362,3 +362,4 @@ function closeModal(e) {
     document.getElementById('translit-modal').style.display = 'none';
 
 }
+
