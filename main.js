@@ -50,7 +50,16 @@ function renderDashboard() {
             if (!e.target.closest('.delete-btn')) openDoc(doc.id);
         };
 
-        const dateStr = new Date(doc.lastModified).toLocaleDateString();
+        const docDate = new Date(doc.lastModified);
+        const now = new Date();
+        
+        // Check if the document date is the same as today's date
+        const isToday = docDate.toDateString() === now.toDateString();
+    
+        const dateStr = isToday 
+            ? docDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) // "11:35 AM"
+            : docDate.toLocaleDateString(); // "1/21/2026"
+        
         const previewText = doc.content.replace(/<[^>]*>?/gm, '').substring(0, 100) || "Empty document";
 
         card.innerHTML = `
@@ -351,4 +360,5 @@ function closeModal(e) {
     if(e && e.target.id !== 'translit-modal' && !e.target.classList.contains('modal-close-btn')) return;
     
     document.getElementById('translit-modal').style.display = 'none';
+
 }
