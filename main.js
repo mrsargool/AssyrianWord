@@ -91,10 +91,13 @@ function openDoc(id) {
 
     updatePageHeight();
     updateCounter();
+
+    document.title = doc.title + " - AssyrianWord";
     document.getElementById('paper').focus();
 }
 
 function showDashboard() {
+    document.title = "AssyrianWord";
     document.getElementById('editor-view').style.display = 'none';
     document.getElementById('dashboard-view').style.display = 'block';
     currentDocId = null;
@@ -123,6 +126,7 @@ function autoSave() {
 
     const content = document.getElementById('paper').innerHTML;
     const title = document.getElementById('doc-title').value;
+    document.title = title + " - AssyrianWord";
 
     const docIndex = docs.findIndex(d => d.id === currentDocId);
     if (docIndex > -1) {
