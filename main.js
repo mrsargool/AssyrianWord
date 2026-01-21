@@ -16,6 +16,10 @@ let isUndoRedoing = false;
 // --- INIT ---
 window.onload = function () {
     renderDashboard();
+
+    // Context Menu Listeners
+    document.addEventListener('mousedown', hideContextMenu);
+    document.getElementById('paper').addEventListener('contextmenu', handleContextMenu);
 };
 
 function updateCounter() {
@@ -160,7 +164,7 @@ function updatePageHeight() {
     // scrollHeight includes padding, so we subtract it to get the raw content height
     // Note: This is an approximation. scrollHeight behavior varies slightly by browser.
     let totalHeight = paper.scrollHeight;
-    
+
     // 3. Define the usable height of a single A4 page
     // A4_HEIGHT_PX (1123) - Padding (Top + Bottom)
     // If your padding is 25mm (~94px) each, usable height is roughly 1123 - 188 = 935px
@@ -169,7 +173,7 @@ function updatePageHeight() {
     // 4. Calculate pages based on USABLE space, not total height
     // We remove the top/bottom padding from the total height before dividing
     const contentOnlyHeight = totalHeight - (paddingTop + paddingBottom);
-    
+
     // Ensure at least 1 page
     const pagesNeeded = Math.ceil(Math.max(contentOnlyHeight, 1) / usablePageHeight) || 1;
 
@@ -235,7 +239,7 @@ function togglePhysicalKeyboard() {
     }
 }
 
-document.addEventListener('keydown', function(e){
+document.addEventListener('keydown', function (e) {
     if (e.shiftKey && e.key == ' ') {
         e.preventDefault();
         togglePhysicalKeyboard();
@@ -244,23 +248,12 @@ document.addEventListener('keydown', function(e){
 
 function handlePhysicalTyping(e) {
     if (e.ctrlKey || e.metaKey || e.altKey) return; // Allow shortcuts (Ctrl+C, etc)
+    if (document.activeElement !== document.getElementById('paper')) return; // Don't steal focus if not editing paper
 
     // Simple mapping example - Expand this map as needed
     // Currently just logs the key to console
-    console.log("Key pressed: " + e.key);
-    console.log(e.shiftKey);
-
-    // Example mapping logic (Uncomment to use):
-    /*
-    const map = {
-        'a': 'ܐ', 'b': 'ܒ', 'g': 'ܓ', 'd': 'ܕ',
-        'h': 'ܗ', 'w': 'ܘ', 'z': 'ܙ', 'k': 'ܟ'
-    };
-    if (map[e.key.toLowerCase()]) {
-        e.preventDefault();
-        addCharacter(map[e.key.toLowerCase()]);
-    }
-    */
+    //console.log("Key pressed: " + e.key);
+    //console.log(e.shiftKey);
 
     const regMap = {
         'a': 'ܐ', 'b': 'ܒ', 'g': 'ܓ', 'd': 'ܕ',
@@ -268,14 +261,14 @@ function handlePhysicalTyping(e) {
         'm': 'ܡ', 'n': 'ܢ', 'p': 'ܦ', 't': 'ܬ',
         'q': 'ܩ', 'r': 'ܪ', 'f': 'ܫ', 'x': 'ܚ',
         's': 'ܣ', 'j': 'ܓ̰', 'c': 'ܨ', 'u': 'ܘܼ', 'o': 'ܘܿ',
-        'e': 'ܥ', 'y': 'ܝ', 'l': 'ܠ', 'i': 'ܝܼ', 'v' : 'ܛ',
-        
-        ',':'،',   // comma → Arabic comma
-        '.':'.',   // dot → dot
-        '!':'!',    // exclamation → exclamation
+        'e': 'ܥ', 'y': 'ܝ', 'l': 'ܠ', 'i': 'ܝܼ', 'v': 'ܛ',
 
-        '`' : '̰', '2': 'ܵ', '1' : 'ܲ', '3' : 'ܸ', '4' : 'ܹ', '5' : 'ܿ', '6' : 'ܼ', '7' : '̇', '8' : '̣', '9' : '̈', '0' : '̤',
-        '\\' : '݇'
+        ',': '،',   // comma → Arabic comma
+        '.': '.',   // dot → dot
+        '!': '!',    // exclamation → exclamation
+
+        '`': '̰', '2': 'ܵ', '1': 'ܲ', '3': 'ܸ', '4': 'ܹ', '5': 'ܿ', '6': 'ܼ', '7': '̇', '8': '̣', '9': '̈', '0': '̤',
+        '\\': '݇'
     };
 
     const shiftMap = {
@@ -288,17 +281,70 @@ function handlePhysicalTyping(e) {
     };
 
     if (regMap[e.key.toLowerCase()] && !e.shiftKey) {
-    e.preventDefault();  // ✅ Stop default , . ! insertion
-    addCharacter(regMap[e.key.toLowerCase()]);
+        e.preventDefault();
+        addCharacter(regMap[e.key.toLowerCase()]);
     } else if (shiftMap[e.key.toLowerCase()]) {
-    e.preventDefault();
-    addCharacter(shiftMap[e.key.toLowerCase()]);
+        e.preventDefault();
+        addCharacter(shiftMap[e.key.toLowerCase()]);
     }
 }
 
 
+// --- CONTEXT MENU AND TRANSLITERATION ---
 
+function handleContextMenu(e) {
+    e.preventDefault();
 
+    const selection = window.getSelection().toString().trim();
+    if (!selection) return;
 
+    const menu = document.getElementById('custom-context-menu');
+    const translitOption = document.getElementById('transliterate-option');
 
+    // Assyrian Unicode Block Range approx: U+0700–U+074F
+    // We check if the selection contains characters in this range
+    const isAssyrian = /[\u0700-\u077F]/.test(selection);
 
+    if (isAssyrian) {
+        translitOption.style.display = 'block';
+    } else {
+        translitOption.style.display = 'none';
+    }
+
+    // Position menu
+    menu.style.left = `${e.pageX}px`;
+    menu.style.top = `${e.pageY}px`;
+    menu.style.display = 'block';
+}
+
+function hideContextMenu() {
+    document.getElementById('custom-context-menu').style.display = 'none';
+}
+
+function deleteSelection() {
+    document.execCommand('delete');
+    handleInput();
+}
+
+function transliterateSelection() {
+    const selection = window.getSelection().toString();
+    if (selection) {
+        const result = aiiTranslit(selection);
+        
+        document.getElementById('translit-phonetic').innerText = result.phonetic;
+        
+        document.getElementById('translit-modal').style.display = 'flex';
+    }
+}
+
+function defineSelection(){
+    const selection = window.getSelection().toString();
+    window.open('https://www.sharrukin.io/assyrian-dictionary/?search=' + encodeURIComponent(selection), '_blank');
+}
+
+function closeModal(e) {
+    // If e is present, it's a click event. Only close if clicking overlay or button.
+    if(e && e.target.id !== 'translit-modal' && !e.target.classList.contains('modal-close-btn')) return;
+    
+    document.getElementById('translit-modal').style.display = 'none';
+}

@@ -62,11 +62,29 @@
                 </svg>
             </button>
 
-            <button class="tool-btn" id="osk-toggle" onclick="toggleOSK()"
-                data-tooltip="Show/Hide On-Screen Keyboard">
+            <button class="tool-btn" id="osk-toggle" onclick="toggleOSK()" data-tooltip="Show/Hide On-Screen Keyboard">
                 <svg viewBox="0 0 24 24">
                     <path
                         d="M21 16H3V4h18v12zm1-14H2C.9 2 0 2.9 0 4v12c0 1.1.9 2 2 2h7v2H7v2h8v-2h-2v-2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM5 13h14v-1.5H5V13zm0-3.5h14V8H5v1.5z" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="subtoolbar">
+            <button class="tool-btn" id="undo" onclick="document.execCommand('undo')" style="width:30px; height:30px;"
+                data-tooltip="Undo (Ctrl + Z)">
+                <svg viewBox="0 0 256 256">
+                    <path
+                        d="M55.265 167.072c-.975-1.973-3.388-2.796-5.372-1.847L42 169s22.5 53.5 85.5 56c60-1.5 96.627-48.626 97-96.5.373-47.874-37-95.5-95.5-96-57.5-1-79.556 45.004-79.556 45.004-1.073 1.93-1.944 1.698-1.944-.501V51.997a4 4 0 0 0-4-3.997H37c-2.209 0-4 1.8-4 4.008v48.984A3.998 3.998 0 0 0 36.998 105h50.504a3.995 3.995 0 0 0 3.998-3.993v-6.014c0-2.205-1.79-4.02-4.008-4.053l-25.484-.38c-2.214-.033-3.223-1.679-2.182-3.628C59.826 86.932 78 45 128.5 45.5c49 .5 82.751 41.929 82.5 83.242C208 184 166 211 127.5 210c-54.5 0-72.235-42.928-72.235-42.928z"
+                        fill-rule="evenodd" />
+                </svg>
+            </button>
+            <button class="tool-btn" id="redo" onclick="document.execCommand('redo')" style="width:30px; height:30px;"
+                data-tooltip="Redo (Ctrl + Y)">
+                <svg viewBox="0 0 256 256">
+                    <path
+                        d="M202.238 167.072c.974-1.973 3.388-2.796 5.372-1.847l7.893 3.775s-22.5 53.5-85.5 56c-60-1.5-96.627-48.626-97-96.5-.373-47.874 37-95.5 95.5-96 57.5-1 79.555 45.004 79.555 45.004 1.074 1.93 1.945 1.698 1.945-.501V51.997a4 4 0 0 1 4-3.997h6.5c2.209 0 4 1.8 4 4.008v48.984a3.998 3.998 0 0 1-3.998 4.008H170a3.995 3.995 0 0 1-3.998-3.993v-6.014c0-2.205 1.789-4.02 4.007-4.053l25.485-.38c2.213-.033 3.223-1.679 2.182-3.628 0 0-18.174-41.932-68.674-41.432-49 .5-82.751 41.929-82.5 83.242 3 55.258 45 82.258 83.5 81.258 54.5 0 72.235-42.928 72.235-42.928z"
+                        fill-rule="evenodd" />
                 </svg>
             </button>
         </div>
@@ -94,6 +112,9 @@
                     <div class="key" onclick="addCharacter('ܛ')" title="Teit">ܛ</div>
                     <div class="key" onclick="addCharacter('ܝ')" title="Yood">ܝ</div>
                     <div class="key" onclick="addCharacter('ܟ')" title="Kap">ܟ</div>
+                </div>
+
+                <div class="kb-row">
                     <div class="key" onclick="addCharacter('ܠ')" title="Lamad">ܠ</div>
                     <div class="key" onclick="addCharacter('ܡ')" title="Meem">ܡ</div>
                     <div class="key" onclick="addCharacter('ܢ')" title="Noon">ܢ</div>
@@ -117,19 +138,43 @@
                     <div class="key" onclick="addCharacter('̮')" title="P - Ph">̮</div>
                     <div class="key" onclick="addCharacter('̰')" title="G - j Sh - sio">̰</div>
                     <div class="key" onclick="addCharacter('݂')" title="Soft sound">݂</div>
+                    <div class="key" onclick="addCharacter('.')" title="Period">.</div>
                 </div>
 
                 <div class="kb-row">
-                    <div class="key wide control" onclick="clearCharacters()">Clear</div>
-                    <div class="key extra-wide" onclick="addCharacter(' ')" title="Space">Space</div>
                     <div class="key wide control" onclick="removeCharacter()" title="Backspace">⌫</div>
+                    <div class="key extra-wide" onclick="addCharacter(' ')" title="Space">Space</div>
                     <div class="key wide control" onclick="addCharacter('\n')" title="Enter">↵</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="custom-context-menu" class="context-menu" style="display: none;">
+        <div class="context-menu-item" onmousedown="deleteSelection()">Delete</div>
+        <div class="context-menu-item" id="transliterate-option" onmousedown="transliterateSelection()">Transliterate</div>
+        <div class="context-menu-item" id="define-option" onmousedown="defineSelection()">Definition</div>
+    </div>
+
+    <div id="translit-modal" class="modal-overlay" style="display: none;" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 style="margin-top:0; color: var(--primary);">Transliteration</h3>
+
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 12px; color: #5f6368; margin-bottom: 4px;">PHONETIC</div>
+                <div id="translit-phonetic"
+                    style="font-size: 18px; padding: 10px; background: #f1f3f4; border-radius: 4px; user-select: text; white-space: pre-wrap; overflow-wrap: break-word;">
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <button class="modal-close-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
+    <script src="translit.js"></script>
 </body>
 
 </html>
