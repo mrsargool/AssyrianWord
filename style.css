@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Marcus';
-    src: url('marcus.woff') format('woff');
+    font-family: 'Idiqlat';
+    src: url('Idiqlat-Regular.woff2') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -95,7 +95,7 @@ body {
     border-bottom: 1px solid #f1f1f1;
     direction: rtl;
     text-align: right;
-    font-family: 'Marcus', sans-serif;
+    font-family: 'Idiqlat', sans-serif;
     background: white;
     border-radius: 8px 8px 0 0;
 }
@@ -307,7 +307,7 @@ body {
     outline: none;
     direction: rtl;
     text-align: right;
-    font-family: 'Marcus', 'Estrangelo Edessa', sans-serif;
+    font-family: 'Idiqlat', 'Estrangelo Edessa', sans-serif;
     font-size: 42px;
     line-height: 1.5;
     cursor: text;
@@ -358,7 +358,7 @@ body {
     user-select: none;
     color: #3c4043;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    font-family: 'Marcus', sans-serif;
+    font-family: 'Idiqlat', sans-serif;
     font-size: 38px;
     transition: all 0.1s;
 }
@@ -521,4 +521,5 @@ body {
     }
 
 }
+
 
